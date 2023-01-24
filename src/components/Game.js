@@ -54,7 +54,7 @@ export default function Game(props) {
             isCorrect = false
         }
 
-        setPerformanceData([...performanceData, { choice, isCorrect, seconds }])
+        setPerformanceData([...performanceData, { choice, isCorrect, secondsLeft: seconds }])
         prepNextQuestion(intervalID)
     }
 

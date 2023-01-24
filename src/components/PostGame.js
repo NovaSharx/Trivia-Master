@@ -39,11 +39,24 @@ export default function PostGame({ postGameData, triviaSpecs, resetSettings }) {
                     </Mui.Box>
                     <Mui.Typography>Selection: <b>{userResult.choice}</b></Mui.Typography>
                     <Mui.Typography>Answer: <b>{triviaData[index].correctAnswer.toUpperCase()}</b></Mui.Typography>
-                    <Mui.Typography>Answered In: <b>{30 - userResult.seconds} second(s)</b></Mui.Typography>
+                    <Mui.Typography>Answered In: <b>{30 - userResult.secondsLeft} second(s)</b></Mui.Typography>
                 </Mui.Paper>
             </Mui.Zoom>
         )
     })
+
+    const calculateScore = () => {
+        let score = 0
+
+        performanceData.map((userResult) => {
+            if (userResult.isCorrect) {
+                score += 10 * (userResult.secondsLeft)
+            }
+        })
+
+        setPlayerScore(score)
+        return score
+    }
 
     return (
         <div>
@@ -64,7 +77,7 @@ export default function PostGame({ postGameData, triviaSpecs, resetSettings }) {
                 <br />
                 <Mui.Paper>
                     <Mui.Typography variant="h2">
-                        Your Score: { }
+                        Your Score: {calculateScore()}
                     </Mui.Typography>
 
                 </Mui.Paper>
