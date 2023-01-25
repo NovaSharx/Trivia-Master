@@ -1,4 +1,5 @@
 import * as Mui from "@mui/material"
+import PublishRoundedIcon from '@mui/icons-material/PublishRounded';
 
 import { useState, useEffect } from "react"
 import axios from "axios"
@@ -9,6 +10,19 @@ export default function PostGame({ postGameData, triviaSpecs, resetSettings }) {
 
     let [playerName, setPlayerName] = useState('Anonymous') // Stores the player's name
     let [playerScore, setPlayerScore] = useState(0) // Stores the player's score
+    let [openForm, setOpenForm] = useState(false)
+
+    useEffect(() => {
+        let score = 0
+
+        for (let i = 0; i < performanceData.length; i++) {
+            if (performanceData[i].isCorrect) {
+                score += 10 * (performanceData[i].secondsLeft)
+            }
+        }
+
+        setPlayerScore(score)
+    }, [playerScore])
 
     // Posts the player's highscore to the Trivia Master database
     const submitHighscore = () => {
@@ -45,17 +59,11 @@ export default function PostGame({ postGameData, triviaSpecs, resetSettings }) {
         )
     })
 
-    const calculateScore = () => {
-        let score = 0
-
-        performanceData.map((userResult) => {
-            if (userResult.isCorrect) {
-                score += 10 * (userResult.secondsLeft)
-            }
-        })
-
-        setPlayerScore(score)
-        return score
+    const openHighscoreForm = () => {
+        setOpenForm(true)
+    }
+    const closeHighscoreForm = () => {
+        setOpenForm(false)
     }
 
     return (
@@ -75,18 +83,36 @@ export default function PostGame({ postGameData, triviaSpecs, resetSettings }) {
                 <br />
                 <Mui.Button variant='contained' onClick={() => resetSettings()}>Back to Launcher</Mui.Button>
                 <br />
-                <Mui.Paper>
+                <Mui.Paper sx={{ padding: '10px' }}>
                     <Mui.Typography variant="h2">
-                        Your Score: {calculateScore()}
+                        Your Score: {playerScore}
                     </Mui.Typography>
+
+                    <Mui.Button variant="contained" endIcon={<PublishRoundedIcon aria-label="Sumbit" />} onClick={openHighscoreForm}>
+                        Submit Highscore
+                    </Mui.Button>
+                    <Mui.Dialog open={openForm} onClose={closeHighscoreForm}>
+                        <Mui.DialogTitle>Post Your Highscore</Mui.DialogTitle>
+                        <Mui.DialogContent>
+                            <Mui.TextField
+                                sx={{ margin: '5px' }}
+                                id="submit-highscore"
+                                label="Player Name"
+                                defaultValue="Anonymous"
+                                onChange={(e) => {setPlayerName(e.target.value)}}
+                            />
+                        </Mui.DialogContent>
+                        <Mui.DialogActions>
+                            <Mui.Button variant="outlined" onClick={closeHighscoreForm}>Cancel</Mui.Button>
+                            <Mui.Button variant="contained" onClick={() => submitHighscore()}>Submit</Mui.Button>
+                        </Mui.DialogActions>
+                    </Mui.Dialog>
 
                 </Mui.Paper>
 
                 <Mui.Stack spacing={2} sx={{ margin: '10px' }}>
                     {renderPostGameData}
                 </Mui.Stack>
-
-                <Mui.Button variant='contained' onClick={() => submitHighscore()}>Test Submit</Mui.Button>
 
             </Mui.Box>
         </div>

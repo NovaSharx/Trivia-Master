@@ -27,6 +27,7 @@ export default function Home() {
     const resetSettings = () => {
         setTriviaSpecs('')
         setApi_Url('')
+        setPostGameData(null)
         setData(null)
     }
 
