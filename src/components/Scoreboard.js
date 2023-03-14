@@ -3,11 +3,15 @@ import Box from '@mui/material/Box';
 import { DataGrid } from '@mui/x-data-grid';
 
 const columns = [
-  { field: 'id', headerName: '', width: 90 },
+  {
+    field: 'id',
+    headerName: '',
+    width: 50
+  },
   {
     field: 'name',
     headerName: 'NAME',
-    width: 150,
+    width: 200,
     editable: true,
   },
   {
@@ -29,10 +33,10 @@ const rows = [
   { id: 7, name: '', score: '' },
   { id: 8, name: '', score: '' },
   { id: 9, name: '', score: '' },
-  { id: 10, name: '', score: ''},
-  { id: 11, name: '', score: ''},
-  { id: 12, name: '', score: ''},
-  { id: 13, name: '', score: ''},
+  { id: 10, name: '', score: '' },
+  { id: 11, name: '', score: '' },
+  { id: 12, name: '', score: '' },
+  { id: 13, name: '', score: '' },
   { id: 14, name: '', score: '' },
   { id: 15, name: '', score: '' },
   { id: 16, name: '', score: '' },
@@ -47,9 +51,9 @@ const rows = [
 export default function Scoreboard() {
   return (
     <Box sx={{ height: 800, width: '100%' }}>
-        <div>
-            <h1>SCOREBOARD</h1>
-        </div>
+      <div>
+        <h1>SCOREBOARD</h1>
+      </div>
       <DataGrid
         rows={rows}
         columns={columns}

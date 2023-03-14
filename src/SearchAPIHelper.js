@@ -1,4 +1,4 @@
-// Asynchronously fetches data from the trivia api.
+ // Asynchronously fetches data from the trivia api.
 const fetchQuestions = async (url) => {
     const response = await fetch(url) // Request data from the trivia api.
     const responseData = await response.json() // Parses the body text as JSON.

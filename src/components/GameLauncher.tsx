@@ -1,14 +1,20 @@
 import * as Mui from "@mui/material"
-import { useState } from "react"
+import React, { ChangeEvent, DragEvent, FormEvent } from "react";
+import { FC, ReactElement, useState } from "react"
+import { Mark } from "../types/Mark";
 
-export default function GameLauncher({ handleSettings }) {
+interface GameLauncherProps {
+    handleSettings: (settings: any) => void;
+}
 
-    let [questionLimit, setQuestionLimit] = useState(10) // Stores the question limit
-    let [difficulty, setDifficulty] = useState('random') // Stores the difficulty level
-    let [category, setCategory] = useState('random') // Stores the category of the trivia
+const GameLauncher: FC<GameLauncherProps> = ({ handleSettings }): ReactElement => {
+
+    let [questionLimit, setQuestionLimit] = useState<number>(10) // Stores the question limit
+    let [difficulty, setDifficulty] = useState<string>('random') // Stores the difficulty level
+    let [category, setCategory] = useState<string>('random') // Stores the category of the trivia
 
     // Rich array used to specify markings for the question limit slider
-    const difficultyMarks = [
+    const difficultyMarks: Array<Mark> = [
         { value: 10, label: '10' },
         { value: 20, label: '20' },
         { value: 30, label: '30' },
@@ -37,7 +43,7 @@ export default function GameLauncher({ handleSettings }) {
                         marks={difficultyMarks}
                         value={questionLimit}
                         step={10} min={10} max={50}
-                        onChange={(event) => setQuestionLimit(event.target.value)}
+                        onChange={(event: any): void => setQuestionLimit(event.target.value)}
                     />
                 </Mui.Box>
 
@@ -87,3 +93,5 @@ export default function GameLauncher({ handleSettings }) {
         </div>
     )
 }
+
+export default GameLauncher;
